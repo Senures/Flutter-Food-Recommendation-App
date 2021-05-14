@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "145696646240",
+    "project_id": "fir-deneme-1d806",
+    "storage_bucket": "fir-deneme-1d806.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145696646240:android:b21c6306b1108980ee8f05",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145696646240-3uofs4q3bjl05d0urh260s94o1ohebq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_application_1",
+            "certificate_hash": "4a53e4a8f1de179a03cdc7da5898547958a4a646"
+          }
+        },
+        {
+          "client_id": "145696646240-6v0u407veq1nb4tv69bh8ulqmrfupla2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpP_4xzQWz35dCE2Hcmsmk88tcuQRlKsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145696646240-6v0u407veq1nb4tv69bh8ulqmrfupla2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
