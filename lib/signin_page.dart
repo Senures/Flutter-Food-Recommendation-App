@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/home_page.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
@@ -38,18 +41,6 @@ class __SignInBodyState extends State<_SignInBody> {
         children: [
           //? Email / Şifre ile giriş
           _EmailPasswordForm(),
-          /**_SignInProvider(
-          *  infoText: "Google ile giriş yap",
-          *  buttonType: Buttons.Google,
-          *  signInMethod: () async => {}, // TODO: Google ile giriş
-          *),
-
-          *_SignInProvider(
-          *  infoText: "Anonim giriş yap",
-          *  buttonType: Buttons.AppleDark,
-          *  signInMethod: () async => {}, // TODO: Anonim giriş
-          *),
-          */
         ],
       ),
     );
@@ -89,7 +80,7 @@ class __EmailPasswordFormState extends State<_EmailPasswordForm> {
                   ),
                 ),
                 validator: (String mail) {
-                  if (mail.isEmpty) return "Mailinizi Giriniz";
+                  if (mail.trim().isEmpty) return "Mailinizi Giriniz";
                   return null;
                 },
               ),
@@ -105,7 +96,7 @@ class __EmailPasswordFormState extends State<_EmailPasswordForm> {
                   ),
                 ),
                 validator: (String password) {
-                  if (password.isEmpty) return "Şifrenizi Giriniz";
+                  if (password.trim().isEmpty) return "Şifrenizi Giriniz";
                   return null;
                 },
                 obscureText: true, //! Şifrenin görünmesini engeller.
@@ -146,6 +137,18 @@ class __EmailPasswordFormState extends State<_EmailPasswordForm> {
           content: Text("Merhaba, ${user.email}"),
         ),
       );
+
+      void navigation() {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+        );
+      }
+
+      var _duration = Duration(seconds: 2);
+      Timer(_duration, navigation);
     } on FirebaseAuthException catch (e) {
       Scaffold.of(context).showSnackBar(
         SnackBar(
