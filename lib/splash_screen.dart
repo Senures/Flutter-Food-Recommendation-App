@@ -77,7 +77,6 @@ class _SplashScreenState extends State<SplashScreen> {
                             Spacer(
                               flex: 4,
                             ),
-                            Text('Eating'),
                             Spacer(),
                           ])
                     ],
