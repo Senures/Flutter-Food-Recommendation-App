@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/food_list_page.dart';
 import 'package:flutter_application_1/recommend_page.dart';
@@ -13,8 +12,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   var sayfaListe = [
-    RecommendPage(),
     FoodListPage(),
+    RecommendPage(),
   ]; //sayfa listesi,bu indekslere body kısmında erişerek body içinde gösteririz
   int secilenIndeks = 0;
 
@@ -22,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ana Sayfa"),
+        title: Text("Yemek öneri uygulaması"),
         actions: [
           Builder(
             builder: (context) => IconButton(
@@ -46,6 +45,7 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
+      body: sayfaListe[secilenIndeks],
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -79,23 +79,22 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text(
-                "Öneri Sistemi",
-                style: TextStyle(color: Colors.black87, fontSize: 18),
-              ),
-              leading: Icon(
-                Icons.star_border,
-                color: Colors.red,
-              ),
-              onTap: () {
-                setState(() {
-                  //arayüzü güncellemek için setstate,set çalısınca build metodu tekrar çalışır
-                  secilenIndeks = 1;
-                });
-                Navigator.pop(
-                    context); //sayfa 2 yi seçtikten snra drawerın kenara çekilmesini sağlıyor
-              },
-            ),
+                title: Text(
+                  "Öneri Sistemi",
+                  style: TextStyle(color: Colors.black87, fontSize: 18),
+                ),
+                leading: Icon(
+                  Icons.star_border,
+                  color: Colors.red,
+                ),
+                onTap: () {
+                  setState(() {
+                    //arayüzü güncellemek için setstate,set çalısınca build metodu tekrar çalışır
+                    secilenIndeks = 1;
+                  });
+                  Navigator.pop(
+                      context); //sayfa 2 yi seçtikten snra drawerın kenara çekilmesini sağlıyor
+                }),
           ],
         ),
       ),
