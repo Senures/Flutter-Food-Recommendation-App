@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:flutter_application_1/details_page.dart';
 import 'signin_page.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("recipe").snapshots(),
+        stream: FirebaseFirestore.instance.collection("recipes").snapshots(),
         //query.snapshots(), //future olsa stream yerine future .snapshots() yerine .get()
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -54,8 +54,21 @@ class HomePage extends StatelessWidget {
             itemCount: querySnapshot.size,
             itemBuilder: (context, index) {
               final map = querySnapshot.docs[index].data();
+              final _minutes = map['minutes'];
+              final _name = map['name'];
+              final _image = map['image'];
               return ListTile(
-                title: Text(map['name']),
+                leading: Image.network(_image),
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailsPage(_name, _image)),
+                  ),
+                },
+                subtitle: Text('Cooking time $_minutes minutes'),
+                trailing: Icon(Icons.more_vert),
+                title: Text(_name),
               );
             },
           );
