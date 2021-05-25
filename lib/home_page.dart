@@ -1,12 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/details_page.dart';
+import 'package:flutter_application_1/food_list_page.dart';
+import 'package:flutter_application_1/recommend_page.dart';
 import 'signin_page.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  //final Query query = FirebaseFirestore.instance.collection("recipe");
+  var sayfaListe = [
+    RecommendPage(),
+    FoodListPage(),
+  ]; //sayfa listesi,bu indekslere body kısmında erişerek body içinde gösteririz
+  int secilenIndeks = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,44 +46,58 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("recipes").snapshots(),
-        //query.snapshots(), //future olsa stream yerine future .snapshots() yerine .get()
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Icon(Icons.error),
-            );
-          }
-
-          final QuerySnapshot querySnapshot = snapshot.data;
-          return ListView.builder(
-            itemCount: querySnapshot.size,
-            itemBuilder: (context, index) {
-              final map = querySnapshot.docs[index].data();
-              final _minutes = map['minutes'];
-              final _name = map['name'];
-              final _image = map['image'];
-              return ListTile(
-                leading: Image.network(_image),
-                onTap: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DetailsPage(_name, _image)),
-                  ),
-                },
-                subtitle: Text('Cooking time $_minutes minutes'),
-                trailing: Icon(Icons.more_vert),
-                title: Text(_name),
-              );
-            },
-          );
-        },
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Text(
+                "",
+                style: TextStyle(color: Colors.white, fontSize: 30),
+              ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/logo.png"),
+                    fit: BoxFit.cover),
+                color: Colors.red,
+              ),
+            ),
+            ListTile(
+              title: Text(
+                "Yemek listesi",
+                style: TextStyle(color: Colors.black87, fontSize: 18),
+              ),
+              leading: Icon(
+                Icons.check,
+                color: Colors.red,
+              ),
+              onTap: () {
+                setState(() {
+                  secilenIndeks = 0; //sayfa 1 i açar
+                });
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text(
+                "Öneri Sistemi",
+                style: TextStyle(color: Colors.black87, fontSize: 18),
+              ),
+              leading: Icon(
+                Icons.star_border,
+                color: Colors.red,
+              ),
+              onTap: () {
+                setState(() {
+                  //arayüzü güncellemek için setstate,set çalısınca build metodu tekrar çalışır
+                  secilenIndeks = 1;
+                });
+                Navigator.pop(
+                    context); //sayfa 2 yi seçtikten snra drawerın kenara çekilmesini sağlıyor
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
